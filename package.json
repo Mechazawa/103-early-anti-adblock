@@ -1,0 +1,20 @@
+{
+  "name": "103-early-anti-adblock",
+  "version": "1.0.0",
+  "description": "Detect adblockers using HTTP 103",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "watch": "ts-node-dev --watch '*.ts' --respawn src/index.ts",
+    "ca": "openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout certs/localhost-privkey.pem -out certs/localhost-cert.pem"
+  },
+  "author": "Mechazawa",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  }
+}
