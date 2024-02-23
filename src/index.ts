@@ -52,6 +52,8 @@ async function onRequest(request: http2.Http2ServerRequest, response: http2.Http
     });
 
     if (tokens.has(token)) {
+        tokens.delete(token);
+
         response.end("<h1>adblock detected</h1>");
     } else {
         response.end(`
