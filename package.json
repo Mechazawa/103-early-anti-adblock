@@ -4,7 +4,7 @@
   "description": "Detect adblockers using HTTP 103",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "serve": "ts-node src/index.ts",
     "watch": "ts-node-dev --watch '*.ts' --respawn src/index.ts",
     "ca": "openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout certs/localhost-privkey.pem -out certs/localhost-cert.pem"
   },
