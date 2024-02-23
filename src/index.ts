@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 
 const TOKEN_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-const FAKE_RESOURCE = 'style.css';
+const FAKE_RESOURCE = 'adv.css';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const tokens = new Set<string>();
