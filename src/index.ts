@@ -19,8 +19,11 @@ async function onRequest(request: http2.Http2ServerRequest, response: http2.Http
         response.writeHead(505, {
             'Content-Type': 'text/html'
         }).end(`
-            HTTP/2 or newer required. <br>
-            Please make sure you are connecting through HTTPs
+            <h1>HTTP Version Not Supported</h1>
+            <p>
+                HTTP/2.0 or later required. <br>
+                Please make sure that you're connecting using HTTPS
+            </p>
         `);
 
         return;
