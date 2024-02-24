@@ -14,6 +14,18 @@ http2.createSecureServer({
 async function onRequest(request: http2.Http2ServerRequest, response: http2.Http2ServerResponse) {
     console.log(`[HTTP/${request.httpVersion}][${request.method}] ${request.url}`);
 
+    // This trick only works on HTTP/2 or newer
+    if (Number(request.httpVersion) < 2) {
+        response.writeHead(505, {
+            'Content-Type': 'text/html'
+        }).end(`
+            HTTP/2 or newer required. <br>
+            Please make sure you are connecting through HTTPs
+        `);
+
+        return;
+    }
+
     if (request.url.startsWith(FAKE_RESOURCE)) {
         const token = request.url.split('?')[1] ?? '';
 
@@ -35,7 +47,7 @@ async function onRequest(request: http2.Http2ServerRequest, response: http2.Http
 
 function doResponse(response: http2.Http2ServerResponse, adblock: boolean) {
     response.writeHead(200, {
-        'content-type': 'text/html',
+        'Content-Type': 'text/html',
     });
 
     if (adblock) {
