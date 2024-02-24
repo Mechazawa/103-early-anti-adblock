@@ -51,7 +51,7 @@ function doIndexResponse(response: Http2ServerResponse, adblock: boolean) {
 
     if (adblock) {
         response.end(`
-            <h1 style="color: red;">adblock detected</h1>
+            <h1 style="color: red; text-transform: uppercase;">adblock detected</h1>
             <p>Please disable adblock so we can show you kittens</p>
         `);
     } else {
