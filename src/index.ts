@@ -11,10 +11,12 @@ http2.createSecureServer({
     cert: fs.readFileSync(path.join(__dirname, '../certs/localhost-cert.pem')),
 }, onRequest).listen(3000);
 
-async function onRequest(request: http2.Http2ServerRequest, response: http2.Http2ServerResponse) {
+async function onRequest(
+    request: http2.Http2ServerRequest,
+    response: http2.Http2ServerResponse
+): Promise<any> {
     console.log(`[HTTP/${request.httpVersion}][${request.method}] ${request.url}`);
 
-    // This trick only works on HTTP/2 or newer
     if (Number(request.httpVersion) < 2) {
         response.writeHead(505, {
             'Content-Type': 'text/html'
@@ -25,27 +27,26 @@ async function onRequest(request: http2.Http2ServerRequest, response: http2.Http
                 Please make sure that you're connecting using HTTPS
             </p>
         `);
-
-        return;
-    }
-
-    if (request.url.startsWith(FAKE_RESOURCE)) {
+    } else if (request.url.startsWith(FAKE_RESOURCE)) {
         const token = request.url.split('?')[1] ?? '';
 
         DeferredInvoker.resolve(token);
 
-        response.writeHead(204).end();
-        return;
+        response.writeHead(204, {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+        }).end();
+    } else {
+        const token = DeferredInvoker.build(
+            (adblock: boolean) => doResponse(response, adblock),
+            1000,
+        );
+
+        response.writeEarlyHints({
+            'link': `<${FAKE_RESOURCE}?${token}>; rel=preload; as=style`,
+        });
     }
-
-    const token = DeferredInvoker.build(
-        (adblock: boolean) => doResponse(response, adblock),
-        1000,
-    );
-
-    response.writeEarlyHints({
-        'link': `<${FAKE_RESOURCE}?${token}>; rel=preload; as=style`,
-    });
 }
 
 function doResponse(response: http2.Http2ServerResponse, adblock: boolean) {
