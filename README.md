@@ -1,10 +1,8 @@
 103 Early Anti Adblock
 ----------------------
-
 Proof of concept that detects adblockers without Javascript by abusing `103 Early Hints`
 
 # Running
-
 You can either use the provided docker container or run the application directly
 
 ## Docker
