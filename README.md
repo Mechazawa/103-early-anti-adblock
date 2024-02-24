@@ -5,6 +5,15 @@ Proof of concept that detects adblockers without Javascript by abusing `103 Earl
 
 # Running
 
+You can either use the provided docker container or run the application directly
+
+## Docker
+To launch the docker container simply run
+```shell
+npm run docker
+```
+
+## Node
 Install dependencies using npm
 ```shell
 npm install
