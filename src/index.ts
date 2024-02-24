@@ -1,19 +1,13 @@
-import * as http2 from 'node:http2';
-import * as path from 'node:path';
-import * as fs from 'node:fs';
+import {Http2ServerRequest, Http2ServerResponse} from 'node:http2';
 
 import DeferredInvoker from "./DeferredInvoker";
+import {start as startServer} from './server';
 
 const FAKE_RESOURCE = '/adv.css';
 
-http2.createSecureServer({
-    key: fs.readFileSync(path.join(__dirname, '../certs/localhost-privkey.pem')),
-    cert: fs.readFileSync(path.join(__dirname, '../certs/localhost-cert.pem')),
-}, onRequest).listen(3000);
-
 async function onRequest(
-    request: http2.Http2ServerRequest,
-    response: http2.Http2ServerResponse
+    request: Http2ServerRequest,
+    response: Http2ServerResponse,
 ): Promise<any> {
     console.log(`[HTTP/${request.httpVersion}][${request.method}] ${request.url}`);
 
@@ -32,6 +26,7 @@ async function onRequest(
 
         DeferredInvoker.resolve(token);
 
+        // Cache headers are not required but nice to have
         response.writeHead(204, {
             'Cache-Control': 'no-cache, no-store, must-revalidate',
             'Pragma': 'no-cache',
@@ -39,8 +34,8 @@ async function onRequest(
         }).end();
     } else {
         const token = DeferredInvoker.build(
-            (adblock: boolean) => doResponse(response, adblock),
-            1000,
+            (adblock: boolean) => doIndexResponse(response, adblock),
+            500,
         );
 
         response.writeEarlyHints({
@@ -49,7 +44,7 @@ async function onRequest(
     }
 }
 
-function doResponse(response: http2.Http2ServerResponse, adblock: boolean) {
+function doIndexResponse(response: Http2ServerResponse, adblock: boolean) {
     response.writeHead(200, {
         'Content-Type': 'text/html',
     });
@@ -66,3 +61,6 @@ function doResponse(response: http2.Http2ServerResponse, adblock: boolean) {
         `);
     }
 }
+
+// Start the server;
+startServer(onRequest, process.argv[2]);
