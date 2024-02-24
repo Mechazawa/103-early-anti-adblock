@@ -3,34 +3,42 @@
 Proof of concept that detects adblockers without Javascript by abusing `103 Early Hints`
 
 # Running
-You can either use the provided docker container or run the application directly
+The application can be run either through a Docker container or directly on your machine using Node.js.
+Here's how:
 
 ## Docker
-To launch the docker container simply run
+Using Docker simplifies the setup and ensures consistency across different environments. 
+To launch the application in a Docker container, execute the following command:
 ```shell
 npm run docker
 ```
+This command wraps the process of building the Docker image and running the container. 
+It ensures that you don't need to manually set up the environment on your local machine.
 
 ## Node
-Install dependencies using npm
+If you prefer running the application directly on your local environment, follow these steps:
+
+1. Install Dependencies: First, install the project dependencies using npm. This ensures that all the necessary Node.js packages are available.
 ```shell
 npm install
 ```
 
-Generate required CA certificates
+Generate CA Certificates: The application requires CA certificates for secure communication. Generate these certificates with:
 ```shell
 npm run ca
 ```
 
-Start the application
+Start the Application: Finally, start the application server using:
 ```shell
 npm run serve
 ```
 
 # How
-By sending an early hints response before sending the real response we can gauge if the user has adblock installed. 
-This way we can send the user an alternative page if they have adblock installed.
-The beauty of this approach is that it does not rely on Javascript.
+The core idea behind this proof of concept is the use of 103 Early Hints response. 
+By sending early hints prior to the actual response, the server can determine whether an adblocker is present based on the client's handling of these hints. 
+If adblock is detected, the server can then serve an alternative page. 
+This method is particularly effective because it doesn't depend on JavaScript, which can be disabled or manipulated by users.
+
 
 # Why
 ![For evil](img/patrick-star-evil-laugh.gif)
