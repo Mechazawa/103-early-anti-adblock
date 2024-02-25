@@ -37,6 +37,33 @@ By sending early hints prior to the actual response, the server can determine wh
 If adblock is detected, the server can then serve an alternative page. 
 This method is particularly effective because it doesn't depend on JavaScript, which can be disabled or manipulated by users.
 
+```
+            ┌───────┐                ┌──────┐                  ┌───────┐                ┌──────┐
+            │Browser│                │Server│                  │Browser│                │Server│
+            └───┬───┘                └──┬───┘                  └───┬───┘                └──┬───┘
+               ┌┴┐   GET /index.html   ┌┴┐                        ┌┴┐   GET /index.html   ┌┴┐
+               │ │ ───────────────────>│ │                        │ │ ───────────────────>│ │
+               │ │                     │ │                        │ │                     │ │
+               │ │   103 Early Hints   │ │                        │ │   103 Early Hints   │ │
+               │ │ <───────────────────│ │                        │ │ <───────────────────│ │
+  ╔═══════════╤╪═╪═════════════════════╪═╪═══╗       ╔═══════════╤╪═╪═════════════════════╪═╪═══╗
+  ║ PREFETCH  ││ │                     │ │   ║       ║ PREFETCH  ││ │                     │ │   ║
+  ╟───────────┘│ │ GET /adv.css?ABCDEF │┌┴┐  ║       ╟───────────┘│ │ GET /adv.css?ABCDEF │┌┴┐  ║
+  ║            │ │ ────────────────────>│ │  ║       ║            │ │ ──────────────────X ││ │  ║
+  ║            │ │                     ││ │  ║       ║            │ │                     ││ │  ║
+  ║            │ │   204 No Content    ││ │──║───┐   ║            │ │                     ││ │──║───┐
+  ║            │ │ <────────────────────│ │  ║   │   ║            │ │                     │└┬┘  ║   │
+  ║            │ │                     │└┬┘  ║   │   ╚════════════╪═╪═════════════════════╪═╪═══╝   │
+  ╚════════════╪═╪═════════════════════╪═╪═══╝   │                │ │                     │ │ ┌─────┴─────────────┐  
+               │ │                     │ │ ┌─────┴─────────────┐  │ │                     │ │ │Prefetch timeout:  │
+               │ │       200 OK        │ │ │Resource fetched:  │  │ │       200 OK        │ │ │Adblock detected   │
+               │ │<────────────────────│ │ │No adblock detected│  │ │<────────────────────│ │ └───────────────────┘
+               └┬┘                     └┬┘ └───────────────────┘  └┬┘                     └┬┘
+            ┌───┴───┐                ┌──┴───┐                  ┌───┴───┐                ┌──┴───┐
+            │Browser│                │Server│                  │Browser│                │Server│
+            └───────┘                └──────┘                  └───────┘                └──────┘
+                              
+```
 
 ## Why
 ![For evil](img/patrick-star-evil-laugh.gif)
