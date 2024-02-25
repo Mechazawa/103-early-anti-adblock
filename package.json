@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "ts-node src/index.ts",
     "watch": "ts-node-dev --watch '*.ts' --respawn src/index.ts",
-    "ca": "mkdir certs && openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout certs/privkey.pem -out certs/cert.pem",
+    "certs": "mkdir certs && openssl req -x509 -newkey rsa:2048 -nodes -sha256 -subj '/CN=localhost' -keyout certs/privkey.pem -out certs/cert.pem",
     "docker": "docker run  -p 3000:3000 --rm -it $(docker build -q .)"
   },
   "author": "Mechazawa",

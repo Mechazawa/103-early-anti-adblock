@@ -6,7 +6,7 @@ COPY package*.json ./
 COPY src ./src
 
 RUN npm install
-RUN npm run ca
+RUN npm run certs
 
 EXPOSE 3000
 

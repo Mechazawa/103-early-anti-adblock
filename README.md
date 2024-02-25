@@ -3,7 +3,6 @@ Proof of concept that detects adblockers without Javascript by abusing `103 Earl
 
 ## Running
 The application can be run either through a Docker container or directly on your machine using Node.js.
-Here's how:
 
 ### Docker
 Using Docker simplifies the setup and ensures consistency across different environments. 
