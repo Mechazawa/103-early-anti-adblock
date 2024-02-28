@@ -30,7 +30,7 @@ export default class DeferredInvoker {
      * @param timeoutMs The timeout in milliseconds.
      * @returns The token associated with the deferred function.
      */
-    public static build<T>(next: ((expired: boolean) => T), timeoutMs: number): string {
+    public static build(next: ((expired: boolean) => void), timeoutMs: number): string {
         const instance = new DeferredInvoker(next, timeoutMs);
 
         DeferredInvoker.store.set(instance.token, instance);
