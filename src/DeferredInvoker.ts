@@ -4,10 +4,10 @@ import {clearTimeout} from "node:timers";
  * `DeferredInvoker` manages asynchronous operations with expiration capabilities, allowing actions to be deferred until a specified timeout.
  * It uses tokens to track and resolve these deferred actions.
  */
-export default class DeferredInvoker<T> {
+export default class DeferredInvoker {
     public readonly token: string;
 
-    private static readonly store = new Map<string, DeferredInvoker<any>>;
+    private static readonly store = new Map<string, DeferredInvoker>;
     private static readonly TOKEN_DEFAULT_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     private readonly call: (expired: boolean) => void;
@@ -18,7 +18,7 @@ export default class DeferredInvoker<T> {
      * @param callable The function to be called upon resolution or expiration.
      * @param timeoutMs The timeout in milliseconds after which the callable is considered expired.
      */
-    private constructor(callable: ((expired: boolean) => T), timeoutMs: number) {
+    private constructor(callable: ((expired: boolean) => void), timeoutMs: number) {
         this.call = callable;
         this.timer = setTimeout(() => this._resolve(true), timeoutMs);
         this.token = DeferredInvoker.generateToken();
