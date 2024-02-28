@@ -77,5 +77,10 @@ However, as browsers continue to expand their support for early hints, it could 
 I have previously [demonstrated other techniques](https://github.com/Mechazawa/pixelAntiAdblock) for detecting adblockers during the server response. 
 Although those require a more involved implementation, they are more effective and less likely to produce false positives.
 
+## Further Reading
+Some good resource for learning more about `103 Early Hints` can be found here:
+ - [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103)
+ - [Faster page loads using server think-time with Early Hints](https://developer.chrome.com/docs/web-platform/early-hints)
+
 ## Why
 ![For evil](img/patrick-star-evil-laugh.gif)
