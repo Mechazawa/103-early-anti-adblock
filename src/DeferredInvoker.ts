@@ -7,7 +7,7 @@ import {clearTimeout} from "node:timers";
 export default class DeferredInvoker {
     public readonly token: string;
 
-    private static readonly store = new Map<string, DeferredInvoker>;
+    private static readonly store = new Map<string, DeferredInvoker>();
     private static readonly TOKEN_DEFAULT_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     private readonly call: (expired: boolean) => void;
