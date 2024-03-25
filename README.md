@@ -66,7 +66,7 @@ This method is particularly effective because it doesn't depend on JavaScript, w
 ```
 
 ## Support
-At the moment this technique is **only works in Firefox**. 
+At the moment this technique **only works in Firefox**. 
 Chrome does not allow adblockers to interact with resources loaded using early hints, nor does it display resources loaded using early hints in the developer console. 
 Additionally, Safari does not support preload early hints at all. 
 Browsers that do not fully support early hints can be easily detected by adding a harmless dummy resource to preload that will not be blocked by adblockers. 
