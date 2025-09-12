@@ -54,12 +54,12 @@ function doIndexResponse(response: Http2ServerResponse, adblock: boolean) {
             <h1 style="color: red; text-transform: uppercase;">
                 adblock detected
             </h1>
-            <p>Please disable adblock so we can show you kittens</p>
+            <p>Please disable adblock so we can show you cats</p>
         `);
     } else {
         response.end(`
             <h1>Advertisement resource was loaded</h1>
-            <img src="http://placekitten.com/g/400/300" alt="Fake ad">
+            <img src="http://placecats.com/g/400/300" alt="Fake ad">
         `);
     }
 }
