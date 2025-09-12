@@ -3,7 +3,7 @@ import {Http2ServerRequest, Http2ServerResponse} from 'node:http2';
 import DeferredInvoker from "./DeferredInvoker";
 import {start as startServer} from './server';
 
-const FAKE_RESOURCE = '/adv.css';
+const FAKE_RESOURCE = '/css/adv.css';
 
 async function onRequest(
     request: Http2ServerRequest,
