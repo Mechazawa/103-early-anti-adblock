@@ -4,6 +4,8 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
+RUN npm install -g npm@11.21.2
+
 WORKDIR /app
 
 COPY package*.json ./
